@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <title>Matplotlib</title>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <link rel="manifest" href="manifest.json">
+    <py-env>
+      - matplotlib
+      - paths:
+        - ./utils.py
+    </py-env>
+    <py-script>
+      import random
+      import matplotlib.pyplot as plt
+      import numpy as np
+      x = []
+      y = []
+      def add_task(*ags, **kws):
+        # create a new dictionary representing the new task
+        task = { "content": new_value_content.value,  "done": False, "created_at": dt.now() }
+
+        # add a new task to the list and tell it to use the `content` key to show in the UI
+        # and to use the key `done` to sync the task status with a checkbox element in the UI
+        myList.add(task)
+
+        # clear the inputbox element used to create the new task
+        new_value_content.clear()
+      
+      def add_value(*ags, **kws):
+        x.append(new_value_content.value)
+        y.append(int(new_value_content.value) * random.random())
+        new_value_content.clear()
+
+      def plot_result(*ags, **kws):
+        plt.plot(x,y)
+        plt.title("test")
+        plt.xlable("x")
+        plt.ylable("y")
+        pyscript.write('plout', plt)
+        
+    </py-script>
+    </head>
+    <body>
+      <button class="button" type="button" id="bInstall">Install Application</button>
+      <div id="plout"></div>
+      <py-box widths="4/5;1/5">
+        <py-inputbox id="new_value_content">
+          def on_keypress(e):
+            if (e.code == "Enter"):
+              add_task()
+        </py-inputbox>
+        <py-button id="new-value-btn" label="Add value!">
+          def on_click(evt):
+            add_task()
+        </py-button>
+      </py-box>
+      <py-list id="myList"></py-list>
+    <script src="js/main.js"></script>
+    </body>
+</html>
